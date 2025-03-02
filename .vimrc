@@ -13,10 +13,42 @@ filetype on
 call plug#begin()
 
 " Monokai colorscheme
-Plug 'crusoexia/vim-monokai'
+Plug 'sickill/vim-monokai'
 
 " NERDTree
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+
+" Emmet
+Plug 'mattn/emmet-vim'
+
+" Ctrlp
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Polyglot
+Plug 'sheerun/vim-polyglot'
+
+" Coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Commentary
+Plug 'tpope/vim-commentary'
+
+" Indent guides
+Plug 'nathanaelkane/vim-indent-guides'
+
+" Css color
+Plug 'ap/vim-css-color'
+
+" Matchtag
+Plug 'valloric/matchtagalways'
+
+" Prettier
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+
+" Autoclosetag
+Plug 'alvan/vim-closetag'
 
 call plug#end()
 
@@ -24,7 +56,6 @@ call plug#end()
 
 " CORE ---------------------------------------------------------------- {{{
 
-syntax on
 set number
 set noswapfile
 set ruler "show file stats
@@ -33,7 +64,6 @@ set encoding=utf-8 "encoding
 set wildmenu "better command-line completion
 set showcmd "show partial commands in the last line of the screen
 set laststatus=2 "always display the status line, even if only one window is displayed
-set termguicolors
 set cursorline "highlight cursor line underneath the cursor horizontally.
 "set cursorcolumn "highlight cursor line underneath the cursor vertically.
 set scrolloff=10 "do not let cursor scroll below or above N number of lines when scrolling.
@@ -63,6 +93,8 @@ set expandtab
 " COLORSCHEMES ---------------------------------------------------------------- {{{
 
 " Monokai
+syntax enable
+set termguicolors
 colorscheme monokai
 
 " }}}
@@ -83,7 +115,11 @@ augroup filetype_vim
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
-" More Vimscripts code goes here.
+" Coc.vim autocompletion
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " }}}
 
